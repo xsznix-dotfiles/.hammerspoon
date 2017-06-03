@@ -25,6 +25,11 @@ for i in alphabet:gmatch(".") do
     local target = targets[letter]
     if target ~= nil then
       target.window:focus()
+      local frame = target.window:frame()
+      hs.mouse.setAbsolutePosition(hs.geometry.point(
+        frame.x + frame.w / 2,
+        frame.y + frame.h / 2))
+      target.box:setFillColor({white = 0.125, alpha = 0.8})
       target.box:hide(0.3)
       hs.timer.doAfter(0.3, function() target.box:delete() end)
       target.text:hide(0.3)
@@ -48,7 +53,8 @@ binding.entered = function()
   local filteredWindows = {}
   local windows = hs.window.orderedWindows()
   for i, window in ipairs(windows) do
-    if window:isStandard() and window:isVisible() then
+    if window:isStandard() and window:isVisible() or
+       window:id() == window:application():mainWindow():id() then
       filteredWindows[#filteredWindows + 1] = window
     end
   end
