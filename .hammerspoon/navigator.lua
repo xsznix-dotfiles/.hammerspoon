@@ -67,9 +67,12 @@ binding.entered = function()
     if not alphabet:find(appName) then
       appName = "A"
     end
+    local tries = 0
     while targets[appName] ~= nil do
       local i = (alphabet:find(appName) % #alphabet) + 1
       appName = alphabet:sub(i, i)
+      tries = tries + 1
+      if tries == 26 then return end -- we've run out of shortcuts
     end
 
     -- Render shortcut
