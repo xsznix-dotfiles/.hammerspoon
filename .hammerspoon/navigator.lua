@@ -13,7 +13,10 @@ local targets = {}
 
 -- Binding entry point
 local binding = hs.hotkey.modal.new({"alt"}, "tab")
-local spaceWatcher = hs.spaces.watcher.new(function() binding:exit() end)
+local spaceWatcher = hs.spaces.watcher.new(function()
+  binding:exit()
+  spaceWatcher:stop()
+end)
 
 -- Making a selection
 for i in alphabet:gmatch(".") do
