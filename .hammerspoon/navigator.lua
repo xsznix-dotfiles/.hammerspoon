@@ -34,6 +34,8 @@ for i in alphabet:gmatch(".") do
       hs.timer.doAfter(0.3, function() target.box:delete() end)
       target.text:hide(0.3)
       hs.timer.doAfter(0.3, function() target.text:delete() end)
+      target.app:hide(0.3)
+      hs.timer.doAfter(0.3, function() target.app:delete() end)
       targets[letter] = nil
       binding:exit()
     end
@@ -90,24 +92,31 @@ binding.entered = function()
     local frame = window:frame()
     local textRect = hs.geometry.rect(
       frame.x + frame.w / 2 - textDims.w / 2 - 2,
-      frame.y + frame.h / 2 - textDims.h / 2,
-      textDims.w,
+      frame.y + frame.h / 2 - textDims.h / 2 - 16,
+      textDims.w + 8,
       textDims.h)
     local boxRect = hs.geometry.rect(
       frame.x + frame.w / 2 - textDims.w / 2 - 26,
       frame.y + frame.h / 2 - textDims.h / 2 - 24,
       textDims.w + 52,
       textDims.h + 48)
+    local appRect = hs.geometry.rect(
+      frame.x + frame.w / 2 - 16,
+      frame.y + frame.h / 2 + 20,
+      32,
+      32)
     t.box = hs.drawing.rectangle(boxRect)
     t.box:setLevel("overlay")
-    t.box:setFillColor({white = 0.125, alpha = 0.5})
+    t.box:setFillColor({white = 0.125, alpha = 0.7})
     t.box:setFill(true)
     t.box:setStroke(false)
     t.box:setRoundedRectRadii(8, 8)
     t.text = hs.drawing.text(textRect, styledText)
     t.text:setLevel("overlay")
+    t.app = hs.drawing.appImage(appRect, window:application():bundleID())
     t.box:show()
     t.text:show()
+    t.app:show()
 
     -- Add to targets
     targets[appName] = t
@@ -119,6 +128,7 @@ binding.exited = function()
   for k in pairs(targets) do
     targets[k].box:delete()
     targets[k].text:delete()
+    targets[k].app:delete()
   end
   targets = {}
 end
