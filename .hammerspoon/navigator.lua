@@ -25,6 +25,7 @@ for i in alphabet:gmatch(".") do
     local target = targets[letter]
     if target ~= nil then
       target.window:focus()
+      target.window:focus()
       local frame = target.window:frame()
       hs.mouse.setAbsolutePosition(hs.geometry.point(
         frame.x + frame.w / 2,
