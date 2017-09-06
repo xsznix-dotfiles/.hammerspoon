@@ -183,19 +183,23 @@ end)
 -- Move to screen
 binding:bind({}, "left", nil, function()
   if stage ~= 0 then return end
-  hs.focusedWindow():moveOneScreenWest(true, true, 0);
+  hs.window.focusedWindow():moveOneScreenWest(true, true, 0);
+  binding:exit()
 end)
 binding:bind({}, "right", nil, function()
   if stage ~= 0 then return end
-  hs.focusedWindow():moveOneScreenEast(true, true, 0);
+  hs.window.focusedWindow():moveOneScreenEast(true, true, 0);
+  binding:exit()
 end)
 binding:bind({}, "up", nil, function()
   if stage ~= 0 then return end
-  hs.focusedWindow():moveOneScreenNorth(true, true, 0);
+  hs.window.focusedWindow():moveOneScreenNorth(true, true, 0);
+  binding:exit()
 end)
 binding:bind({}, "down", nil, function()
   if stage ~= 0 then return end
-  hs.focusedWindow():moveOneScreenSouth(true, true, 0);
+  hs.window.focusedWindow():moveOneScreenSouth(true, true, 0);
+  binding:exit()
 end)
 
 -- Grid size selection shortcuts
