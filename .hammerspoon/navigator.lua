@@ -10,10 +10,13 @@ local alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 -- Global state
 local targets = {}
+local currentSpaceWindows = hs.window.filter.new()
+currentSpaceWindows:setCurrentSpace(true)
 
 -- Binding entry point
 local binding = hs.hotkey.modal.new({"alt"}, "tab")
-local spaceWatcher = hs.spaces.watcher.new(function()
+local spaceWatcher
+spaceWatcher = hs.spaces.watcher.new(function()
   binding:exit()
   spaceWatcher:stop()
 end)
@@ -54,7 +57,7 @@ binding.entered = function()
 
   -- Get list of windows
   local filteredWindows = {}
-  local windows = hs.window.orderedWindows()
+  local windows = currentSpaceWindows:getWindows()
   for i, window in ipairs(windows) do
     if window:isStandard() and window:isVisible() or
        window:id() == window:application():mainWindow():id() then
