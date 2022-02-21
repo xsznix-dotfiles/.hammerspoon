@@ -19,7 +19,9 @@ local chordBuilder = hs.eventtap.new({keyDown, keyUp}, function(event)
     logger.d("up: " .. key)
     if pressedKeys[key] then
       numPressed = numPressed - 1
-      binding:exit()
+      if numPressed == 0 then
+        binding:exit()
+      end
     end
   else
     logger.d("down: " .. key)
@@ -35,9 +37,16 @@ local flagWatcher = hs.eventtap.new({flagsChanged}, function(event)
   local shift = event:getFlags().shift
   logger.d("shift: " .. (shift and "true" or "false"))
   if shift then
+    if pressedKeys.shift ~= true then
+      numPressed = numPressed + 1
+    end
     pressedKeys.shift = true
   elseif pressedKeys.shift ~= nil then
     pressedKeys.shift = false
+    numPressed = numPressed - 1
+    if numPressed == 0 then
+      binding:exit()
+    end
   end
 end)
 flagWatcher:stop()
