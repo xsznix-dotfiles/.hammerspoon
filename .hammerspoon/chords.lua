@@ -2,6 +2,7 @@
 local logger = hs.logger.new("chords", "info")
 local binding = hs.hotkey.modal.new({"ctrl", "cmd"}, "s")
 local chords
+local privateChords
 
 -- Chord builder
 local pressedKeys = {}
@@ -59,6 +60,7 @@ function binding:entered()
   chordBuilder:start()
   flagWatcher:start()
   chords = hs.json.read("./chords.json")
+  privateChords = hs.json.read("./chords_private.json")
 end
 
 function binding:exited()
